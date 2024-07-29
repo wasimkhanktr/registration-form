@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import useNavigate
+import { Link } from 'react-router-dom';
 import '../styles/registration.css';
 
 function RegistrationForm() {
@@ -10,10 +10,9 @@ function RegistrationForm() {
         phone: '',
         address: '',
         username: '',
-        password: ''
+        password: '',
+        confirmPassword: '' // Added confirmPassword field
     });
-
-    // const navigate = useNavigate(); // Initialize useNavigate
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +24,11 @@ function RegistrationForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
 
         const apiURL = 'https://sheetdb.io/api/v1/obm9ho26255z6';
         
@@ -51,7 +55,8 @@ function RegistrationForm() {
                     phone: '',
                     address: '',
                     username: '',
-                    password: ''
+                    password: '',
+                    confirmPassword: '' // Reset confirmPassword field
                 });
             } else {
                 alert('Failed to submit form. Please try again.');
@@ -66,32 +71,41 @@ function RegistrationForm() {
         <div className="reg-container">
             <h1>Registration Form</h1>
             <form onSubmit={handleSubmit}>
-                <label>Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-                
-                <label>Date of Birth</label>
-                <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-                
-                <label>Email</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                
-                <label>Phone</label>
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
-                
-                <label>Address</label>
-                <input type="text" name="address" value={formData.address} onChange={handleChange} required />
-                
-                <label>Username</label>
-                <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-                
-                <label>Password</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                
+                <div>
+                    <label>Name</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Address</label>
+                    <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Username</label>
+                    <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+                </div>
                 <button type="submit">Register</button>
             </form>
-            <Link to="/">Login</Link>
-
-            {/* <button onClick={() => navigate('/')}>Go to Login</button> */}
+            <Link to={'/'}>Go to Login</Link>
         </div>
     );
 }
